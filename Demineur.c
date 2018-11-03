@@ -43,13 +43,13 @@ void afficheGrillePlateau(plateau* p, int n)
     }  
 }
 
-void initPlateauV2(plateau* p, int n)
+void initPlateauV2(plateau* p, int n, int abs, int ord)
 {
-	int k;
+	int k, i, j;
 	(*p).o = 'O';
 	for(k = 1 ; k <= n ; k++)
 	{
-		if(abs = i && ord = j)
+		if(abs == i && ord == j)
 		{
 			(*p).o = 'V';
 			*(p + k) = nextPlateau(p + k - 1);
@@ -66,12 +66,7 @@ void saisieCoordonnees(plateau* p)
 	scanf("%d", &abs);
 	printf("Ordonee (entre 1 et 3) : ");
 	scanf("%d", &ord);
-	/*while ()
-	{
-		printf("\nVeuillez resaisir les valeurs.\n");
-		saisieCoordonnees(p);
-	}*/
-	initPlateauV2(p, N);
+	initPlateauV2(p, N, abs, ord);
 }
 
 void conditionVictoire()
@@ -84,25 +79,37 @@ void conditionDefaite()
 	printf("Vous avez perdu, dommage...");
 }
 
+void conditionFinal(plateau* p, int n, int abs, int ord)
+{
+	int i = 0;
+	while(abs != 2 && ord != 2)
+	{
+		if (abs == 2 && ord == 2)
+		{
+			conditionDefaite();
+			exit(5);
+		}
+	  	else if (i = 8)
+		{
+			conditionVictoire();
+			exit(5);
+		}
+		else
+		{
+			i = i +1;
+			initPlateauV2(p, N, abs, ord);
+			afficheGrillePlateau(p, N);
+			saisieCoordonnees(p);
+		}
+	}
+}
+
 int main()
 {
 	plateau* p;
 	initPlateau(p, N);
 	afficheGrillePlateau(p, N);
 	saisieCoordonnees(p);
-	//while()
-	//{
-	//	if ()
-	//	{
-			//conditionDefaite();
-			//exit(5);
-	//	}
-	//	else
-			initPlateauV2(p, N);
-			afficheGrillePlateau(p, N);
-			saisieCoordonnees(p);
-	//}
-	//conditionVictoire();
-	//exit(5);
+	conditionFinal(p, N, abs, ord);
 	return 0;
 }
