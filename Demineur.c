@@ -6,6 +6,8 @@
 typedef struct plateau
 {
     char o;
+    char abs;
+    char ord;
 }plateau;
 
 plateau nextPlateau(plateau* previous)
@@ -43,35 +45,27 @@ void afficheGrillePlateau(plateau* p, int n)
     }  
 }
 
-void initPlateauV2(plateau* p, int n, int abs, int ord)
-{
-	int k, i, j;
-	(*p).o = 'O';
-	for(k = 1 ; k <= n ; k++)
-	{
-		if(abs == i && ord == j)
-		{
-			(*p).o = 'V';
-			*(p + k) = nextPlateau(p + k - 1);
-		}
-		else
-			*(p + k) = nextPlateau(p + k - 1);
-	}
-}
-
 void saisieCoordonnees(plateau* p)
 {
-	int abs, ord;
 	printf("Abscisse (entre 1 et 3) : ");
-	scanf("%d", &abs);
+	scanf("%d", &(*p).abs);
+	while((*p).abs < 1 || (*p).abs > 3)
+	{
+		printf("Veuillez saisir une valeur entre 1 et 3.\n");
+		scanf("%d", &(*p).abs);		
+	}
 	printf("Ordonee (entre 1 et 3) : ");
-	scanf("%d", &ord);
-	initPlateauV2(p, N, abs, ord);
+	scanf("%d", &(*p).ord);
+	while((*p).ord < 1 || (*p).ord > 3)
+	{
+		printf("Veuillez saisir une valeur entre 1 et 3.\n");
+		scanf("%d", &(*p).ord);
+	}
 }
 
 void conditionVictoire()
 {
-	printf("Vous avez gagné, bravo !!");
+	printf("Vous avez gagne, bravo !!");
 }
 
 void conditionDefaite()
@@ -79,17 +73,12 @@ void conditionDefaite()
 	printf("Vous avez perdu, dommage...");
 }
 
-void conditionFinal(plateau* p, int n, int abs, int ord)
+void conditionFinal(plateau* p, int n)
 {
 	int i = 0;
-	while(abs != 2 && ord != 2)
+	do
 	{
-		if (abs == 2 && ord == 2)
-		{
-			conditionDefaite();
-			exit(5);
-		}
-	  	else if (i = 8)
+	  	if (i == 7)
 		{
 			conditionVictoire();
 			exit(5);
@@ -97,11 +86,14 @@ void conditionFinal(plateau* p, int n, int abs, int ord)
 		else
 		{
 			i = i +1;
-			initPlateauV2(p, N, abs, ord);
+			initPlateau(p, N);
 			afficheGrillePlateau(p, N);
 			saisieCoordonnees(p);
 		}
 	}
+	while((*p).abs != 2 || (*p).ord != 2);
+	conditionDefaite();
+	exit(5);
 }
 
 int main()
@@ -110,6 +102,6 @@ int main()
 	initPlateau(p, N);
 	afficheGrillePlateau(p, N);
 	saisieCoordonnees(p);
-	conditionFinal(p, N, abs, ord);
+	conditionFinal(p, N);
 	return 0;
 }
