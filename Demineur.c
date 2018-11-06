@@ -6,8 +6,8 @@
 typedef struct plateau
 {
     char o;
-    char abs;
-    char ord;
+    int abs;
+    int ord;
 }plateau;
 
 plateau nextPlateau(plateau* previous)
@@ -34,7 +34,7 @@ void affichePlateau(plateau* p)
 
 void afficheGrillePlateau(plateau* p, int n)
 {
-  	int i, j;
+  	int i, j, k;
  	for(i = 1 ; i <= n ; i++)
     {
     	for(j = 1 ; j <= n ; j++)
@@ -63,37 +63,45 @@ void saisieCoordonnees(plateau* p)
 	}
 }
 
-void conditionVictoire()
-{
-	printf("Vous avez gagne, bravo !!");
-}
-
-void conditionDefaite()
-{
-	printf("Vous avez perdu, dommage...");
-}
-
 void conditionFinal(plateau* p, int n)
 {
 	int i = 0;
-	do
+	while((*p).abs != 2 || (*p).ord != 2)
 	{
 	  	if (i == 7)
 		{
-			conditionVictoire();
+			printf("Vous avez gagne, bravo !!");
 			exit(5);
 		}
 		else
 		{
-			i = i +1;
+			i = i + 1;
 			initPlateau(p, N);
 			afficheGrillePlateau(p, N);
 			saisieCoordonnees(p);
 		}
 	}
-	while((*p).abs != 2 || (*p).ord != 2);
-	conditionDefaite();
-	exit(5);
+	printf("Vous avez perdu, dommage...");
+	fflush(stdin);
+}
+
+void recommencer(plateau* p, int n)
+{
+	char rep;
+	printf("Voulez vous recommencer ? (y/n) :\n");
+	scanf("%c", &rep);
+	if (rep == 'y')
+	{
+		initPlateau(p, N);
+		afficheGrillePlateau(p, N);
+		saisieCoordonnees(p);
+		conditionFinal(p, N);
+	}
+	else
+	{
+		printf("A bientot !");
+		exit(5);
+	}
 }
 
 int main()
@@ -103,5 +111,6 @@ int main()
 	afficheGrillePlateau(p, N);
 	saisieCoordonnees(p);
 	conditionFinal(p, N);
+	recommencer(p, N);
 	return 0;
 }
