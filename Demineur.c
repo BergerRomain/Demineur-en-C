@@ -107,6 +107,7 @@ void recommencer(plateau* p, int n)
 int main()
 {
 	plateau* p;
+	p = (plateau*)malloc(sizeof(plateau));
 	initPlateau(p, N);
 	afficheGrillePlateau(p, N);
 	saisieCoordonnees(p);
